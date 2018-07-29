@@ -1,6 +1,7 @@
 # BizzinnoStrategist Ad-Platform
 
 This is a part of a project made for an advertisement platform created by Bizzinnostrategist (A company in Gurgaon, India) 
+
 ![alt text](https://github.com/thePercept/optimus/blob/master/cropped-logo.png "BizzinnoStrategist")
 
 
@@ -11,6 +12,9 @@ The platform has 3 components in total:
 3. Cablet
 
 ## Optimus
+
+![alt text](https://github.com/thePercept/optimus/blob/master/rsz_screenshot_from_2018-07-29_17-43-49.png "Optimus Dashboard")
+
 
 It's aimed to be used as an admin system where core business operations can take place like Merchant Registration, Payements, Resource management, Verification, Q/A and Publishing of deals. 
 
@@ -29,6 +33,9 @@ Payements are done when you reach the shop and want to use the voucher in CASH (
 Revenue can also be made by selling plans for advertisement to the Merchant. You can decide it upfront during Merchant Sign-Ups
 
 ## Cablet
+
+![alt text](https://github.com/thePercept/optimus/blob/master/Films_Browse.png "Optimus Dashboard")
+
 
 
 Pre-requisites for this concept are :

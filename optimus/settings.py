@@ -21,7 +21,7 @@ DEBUG = True
 if DEBUG == False:
     STATIC_PATH = "/home/optimus/optimus/static"
 else:
-    STATIC_PATH = "/home/thebitshoes/Desktop/DjangoEnvironment/optimus/static"
+    STATIC_PATH = "path/to/static/files"
     #STATIC_PATH = os.path.join(BASE_DIR,'static')
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -38,7 +38,7 @@ SECRET_KEY = 'cjjzz&t3y_izmk_26n@0_4cnbadk$oj!jkgd)(m&7fr4ubf-o='
 
 if DEBUG == False:
     # IP of the server hosting this app
-    # ALLOWED_HOSTS = ['xxx.xxx.xx.xx']
+    ALLOWED_HOSTS = ['xxx.xxx.xx.xx']
 else:
     print("DEBUG'S TRUE..")
     ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost']
