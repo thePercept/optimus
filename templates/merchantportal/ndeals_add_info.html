@@ -1,0 +1,340 @@
+{% extends 'nbase.html' %} {% load static %} {% block title %} Merchant Portal | Add Deal Details {% endblock %} {% block customcss %}
+<link href={% static 'css/merchantportal/mportal.css' %} rel="stylesheet">
+{% endblock %} {% block body %}
+<nav class="navbar  navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Merchant Portal</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href={% url 'mp_index' %}>Dashboard</a></li>
+                <li class="active"><a href={% url 'mp_deals' %}>Deals</a></li>
+                <li><a href="#">Advertisement</a></li>
+                <li><a href={% url 'mp_inventory' %}>Inventory</a></li>
+                <li><a href="post">Sales</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.html">Welcome Merchant</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+<section id="breadcrumb">
+    <div class="container ">
+        <ol class="breadcrumb breadcrumb-margin">
+            <li class="active">Dashboard</li>
+        </ol>
+    </div>
+</section>
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <h4>Deal banner preview</h4>
+                    <hr>
+                    <!--Daily Stats-->
+                    <div class="deal-format" id="div_B ">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 temp_bg1">
+                                <img src="http://via.placeholder.com/210x210">
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-9  temp_bg2 ">
+                                <h4 id="title_deal">  1 Non-Veg Wicked Wrap + 1 Dunkaccino Coffee (Regular) </h4>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="row" id="deal-detail-location">
+                                    <div class="col-md-1 col-sm-1 col-xs-1 temp_bg3 ">
+                                        <img src="images/pin.png">
+                                    </div>
+                                    <div class="col-md-8 col-sm-8 col-xs-8  ">
+                                        <p id="dist">12 minutes away</p>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3 temp_bg5 ">
+                                        <p>
+                                            <del id="old_p">&#8377 Old Price</del>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row" id="deal-detail-location">
+                                    <div class="col-md-1 col-sm-1 col-xs-1 temp_bg3 ">
+                                        <b>M</b>
+                                    </div>
+                                    <div class="col-md-8 col-sm-8 col-xs-8 temp_bg3 temp_bg1">
+                                        <p>The Dunkin Donuts, Sector 18, Noida</p>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3 temp_bg4 ">
+                                        <p id="new_p">&#8377 New Price</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default height-panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Deal Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Percentage Discount
+                                    </label>
+                                    <p>
+                                        <br> </p>
+                                    <div class="form-group">
+                                        
+                                        <div class="input-group">
+                                            <div class="input-group-addon">%</div>
+                                            <input type="text" class="form-control" id="disc_applied" placeholder="Discount %">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="apply_discount">Apply Discount</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" disabled=""> Buy one Get One
+                                    </label>
+                                    <p>
+                                        <br> </p>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputAmount">Additional Free items</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"> +1 </div>
+                                            <select class="form-control" disabled="">
+                                                <option>Cafe' Frappe</option>
+                                                <option>Bread Sticks</option>
+                                                <option>Cheese Sandwich</option>
+                                                <option>Hot Chocolate cake</option>
+                                                <option>Latte'</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" disabled="">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <br/>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <LABEL>Deal Timings</LABEL>
+                                <br/>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="" disabled=""> Monday
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="" disabled=""> Tuesday
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="" disabled=""> Wednesday
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="" disabled=""> Thursday
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="" disabled=""> Friday
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox" checked="" disabled="">
+                                    <label>
+                                        <input type="checkbox" checked="" disabled=""> Saturday
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="" disabled=""> Sunday
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" align="right">
+            {% csrf_token %}
+            <button class="btn" id = "publish">PUBLISH</button>
+          </div>
+
+        </div>
+</section>
+<footer id="footer">
+    <div class="container">
+        <p>BizzInno Strategist &copy 2017</p>
+    </div>
+</footer>
+
+{% endblock %}
+
+{% block bottomscript %}
+
+
+<script type="text/javascript"> 
+  var old_price=0;
+  var new_price=0;
+  var discount_percentage = 0;
+  var title ="";
+  var meta = {};
+  var deal_items;
+
+var plus = encodeURIComponent('+');
+
+$(document).ready(function(){
+  deal_items = JSON.parse(localStorage.getItem("items"));
+  console.log(deal_items);  
+  console.log(deal_items.length);
+
+  for(var i = 0;i<deal_items.length;i++){
+    console.log("ITEMS ::"+i);
+    console.log(deal_items[i]);
+    var temp = deal_items[i];
+    title  =title + ' '+temp[1] +' '+temp[0]+" "+plus;
+
+    old_price = parseInt(old_price)+parseInt(temp[2]);
+  } 
+  title = title.slice(0,-1);
+  $('#title_deal').html(title);
+
+  console.log(title);
+  console.log(old_price);
+
+});
+
+$('#apply_discount').click(function(){
+
+  var disc = $('#disc_applied').val();
+  var discount = disc/100;
+  var off = old_price * discount;
+  new_price = old_price-off;
+  console.log(new_price );
+
+  $('#old_p').html("&#8377  "+old_price);
+  $('#new_p').html("&#8377  "+new_price);
+
+  });
+
+$('#publish').click(function(){
+
+
+  var t = {};
+  t["items"]=deal_items;
+  t["title"]=title;
+  t["old_price"]=old_price;
+  t["new_price"]=new_price;
+
+
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+  
+  data_deals = JSON.stringify(t);
+  console.log(data_deals);
+  $.ajax({
+    type: "POST",
+    url : '{% url "mp_deals_add_info_new" %}',
+    contentType: "application/json",
+    data : data_deals,
+    "success": function(data) {
+        if(data.status==1){
+            console.log(data);
+            window.location.href = data.url;
+
+        }
+        else
+        {
+            console.log("ERROR HAppened");
+        }
+                
+            },    
+        
+    dataType: "json",
+    });
+
+
+localStorage.clear();
+
+});
+
+
+
+</script>
+
+{% endblock %}     

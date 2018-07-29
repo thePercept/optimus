@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load staticfiles%}
+
+<html>
+    <head>
+        <title>{% block title %}Merchant Portal{% endblock %}</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{% static 'css/mycss.css' %}" rel="stylesheet">
+        <link href="{% static "datatables/css/bootstrap.min.css" %}" rel="stylesheet">
+        <link href="{% static "datatables/css/dataTables.bootstrap.min.css" %}" rel="stylesheet">
+        <link href="{% static "datatables/css/bootsnip.css" %}" rel="stylesheet">
+        <style>
+        {% block style %}
+        {% endblock %}
+
+        </style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script>
+
+
+      $(document).ready(function() {
+        var total_price_deal = 0;
+        var di_item = "";
+        var di_quantity = 0;
+        var dil_price = 0
+
+        function DealItem(item,qty,price){
+          this.di_item=item;
+          this.di_quantity=qty;
+          this.dil_price=price;
+
+        }
+
+
+
+        var deal_collection = []
+
+
+           $('a[id^="tag"]').click(function() {
+             var index=$(this).index()-1;
+             var text = $(this).text();
+             var inv = {{ inv_all|safe }};
+             //console.log(text)
+             var item = inv[index].fields.item_name;
+             var qty = inv[index].fields.quantity;
+             var price = inv[index].fields.price;
+
+             var dealObj = new DealItem(item,qty,price);
+             deal_collection.push(dealObj);
+             console.log(deal_collection);
+
+
+
+             var list_item =item + qty + price;
+             total_price_deal = +total_price_deal + +price
+             //console.log(item+'::'+qty+'::'+price);
+             $('#deal_items_list').append('<div class="row"><div class="col-md-8">'+item+'<small>'+qty+','+price+'</small>'+'</div><div class="col-md-1"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></div></div></div><hr>')
+             $('#total_price').text(total_price_deal)
+             //items.push(item)
+             //qtys.push(qty)
+             //return false;
+           });
+
+
+           $('#ajax_call').click(function(){
+             alert("AJAX Call Clicked");
+             console.log("AJAX Call clicked");
+             var storedNames = JSON.parse(localStorage.getItem("deal_collection"));
+              console.log(storedNames);alert(storedNames);
+             if (typeof(Storage) !== "undefined") {
+
+                localStorage.setItem('deal_collection',JSON.stringify(deal_collection))
+
+
+
+                console.log("Data stored to storage ..I think")
+
+                } else {
+                    // Sorry! No Web Storage support..
+                    alert('No Storage available')
+                }
+                
+
+              });
+
+
+
+
+           });
+
+
+
+           </script>
+
+      </head>
+
+    <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/merchants">Merchant Portal</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <!--Nothing inside this navbar ,i.e no menu -->
+            <li class="active"><a href="#">Dashboard<span class="sr-only">(current)</span></a></li>
+            <li><a href="inventory/">Inventory</a></li>
+            <li><a href="#">Deals</a></li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logged In <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Export to Excel</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Account</li>
+                <li><a href="logout/">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+        {% block body_block %}{% endblock %}
+
+
+
+
+        <!-- Placed at the end of the document so the pages load faster -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"><\/script>')</script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="{% static "datatables/js/jquery.js" %}"></script>
+        <script src="{% static "datatables/js/bootstrap.min.js" %}"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="{% static "datatables/js/dataTables.bootstrap.min.js" %}"></script>
+        <script src="{% static "datatables/js/bootsnip.js" %}"></script>
+        <script>
+        https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js
+        $('#merchantTable').dataTable();
+        </script>
+        <script>
+        $('#popoverData').popover();
+        </script>
+
+
+    </body>
+</html>

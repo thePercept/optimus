@@ -1,0 +1,71 @@
+<html>
+<body>
+<b>On Ajax Page.</b>
+</br>
+And we have to recieve json data to be saved in models.
+</br></br></br>
+<h4 color >Deal Items</h4>
+<hr>
+<table id = "deal_items_table">
+  <tr>
+    <th>Sr.</th>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Price</th>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+
+    var arr = localStorage.getItem("deal_array");
+
+    console.log(arr);
+
+    var msg = "Hmm...ok"
+    $.ajax({
+        url: '{% url 'ajax' %}',
+        type: 'GET',
+        data: arr,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+
+        success: function(msg) {
+            alert(msg);
+        }
+    });
+    var converted_json = JSON.parse(arr)
+    for (var index in converted_json){
+      console.log(converted_json[index])
+    $('#deal_items_table').append('<tr><td>'+index+'</td><td>'+converted_json[index].di_item+'</td>'+converted_json[index].di_quantity+'<td>'+converted_json[index].dil_price+'</td></tr>')
+    }
+
+
+
+
+     });
+
+     </script>
+</body>
+</html>

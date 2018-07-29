@@ -1,0 +1,113 @@
+{% extends 'merchant_base0.html' %}
+{% load static %}
+
+<html>
+  <head>
+    <title>Merchant Portal</title>
+
+  </head>
+
+  {% block body_block %}
+  <div class="container" id="main-container" >
+    <div class="page-header">
+      <h3>Create Deals </h3> <small>The Merchant logged in is : {{ merchant_obj.merchant_name }}</small>
+    </div>
+
+
+    <!-- var inv = {{ inv_all }} -->
+
+      {% if inventory_obj %}
+        {% if merchant_category == 'fnb' %}
+
+            <div class = "row">
+              <div class="col-md-8">
+                <div class="list-group">
+
+                    <a class="list-group-item active">
+                    <div class="row">
+                    <div class="col-md-6"><b>Item</b></div>
+                    <div class="col-md-2"><b>Quantity</b></div>
+                    <div class="col-md-2"><b>Price</b> </div>
+                  </div>
+                  </a>
+
+                {% for inventory in inventory_obj %}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <a href="javascript:void(0);" class="list-group-item" id="tag<%=count++%>">
+                      <div class="row">
+                      <div class="col-md-6">{{ inventory.item_name }}</div>
+                      <div class="col-md-2">{{ inventory.quantity }}</div>
+                      <div class="col-md-2">{{ inventory.price }}</div>
+                    </div>
+                    </a>
+                {% endfor %}
+                </div>
+
+
+                <nav aria-label="...">
+                {% if inventory_obj.has_other_pages %}
+                  <ul class="pagination pagination-sm">
+                    {% if inventory_obj.has_previous %}
+                    <li><a href = ""><<</a></li>
+                    {% else %}
+                    <li class="disabled"><a href = "">&raquo;</a></li>
+                    {% endif %}
+
+                    {% for i in inventory_obj.paginator.page_range %}
+                      {% if inventory_obj.number == i %}
+                          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                          <li><a href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if inv_objs.has_next %}
+                      <li><a href="?page={{ inventory_obj.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+
+                </nav>
+                </div>
+
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading"><B>Deal Items Added</B></div>
+                  <div class="panel-body">
+                          <div id="header" class="vertical-menu">
+                          <div id="deal_items_list">
+
+                          </div>
+                          </div>
+                  </div>
+                  <div class="panel-footer">
+                  <div class = "row">
+                    <div class = "col-md-6">Total Price :</div>
+                    <div class="col-md-2"  id="total_price"></div>
+                  </div>
+                  <!-- Table -->
+                  <table class="table">
+                  </table>
+                </div>
+                <div>
+                  <a href = "{% url 'ajax' %}" id="ajax_call"><B>CREATE DEALS<B> </a>
+
+                </div>
+
+
+              </div>
+
+            </div>
+        {% elif merchant_category == 'travelnhotels' %}
+          <b>Travel and Hotes Category </b>
+        {% else %}
+          <b>Reached to end of if </b>
+      {% endif %}
+
+    {% else %}
+    <p>No inventory exists in your account. Please add inventory before creating a Deal<p>
+  {% endif %}
+  {% endblock %}
+
+</html>

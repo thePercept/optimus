@@ -1,0 +1,219 @@
+{% extends 'nbase.html' %}
+{% load static %}
+
+{% block title %}
+  Merchant Portal | Login
+{% endblock %}
+{% block customcss %}
+<link href={% static 'css/merchantportal/mportal.css' %} rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+<nav class="navbar  navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Merchant Portal</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href={% url 'mp_index' %}>Dashboard</a></li>
+            <li><a href={% url 'mp_deals' %}>Deals</a></li>
+            <li><a href="#">Advertisement</a></li>
+            <li class="active"><a href={% url 'mp_inventory' %}>Inventory</a></li>
+      <li><a href="post">Sales</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Welcome Merchant</a></li>
+            <li><a href="login.html">Logout</a></li>
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+</nav>
+
+<header id="header">
+        <div class="container">
+          <div class="row">
+              <div class="col-md-10 head-red">
+                    
+              </div>
+
+              <div class="col-md-2 head-red">
+                  <button type="button" class="btn btn-default">CREATE DEAL</button>
+              </div>
+          </div>
+        </div>
+</header>
+
+
+
+
+
+
+<section id="breadcrumb">
+        <div class="container ">
+            <ol class="breadcrumb breadcrumb-margin">
+                <li class="active">Dashboard</li>
+            </ol>
+        </div>
+</section>
+
+<section id="main">
+    <div class="container">
+<!--               <div class=" col-md-12 alert alert-info fade in">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Note!</strong> Please read the comments carefully.
+              </div> -->
+
+      <div class="row">
+
+      <div class="col-md-12">
+
+          <!--Daily Stats-->
+          <div class="panel panel-default ">
+            <div class="panel-heading main-color-bg">
+              <h3 class="panel-title">Inventory Status</h3>
+            </div>
+            <div class="panel-body" id="invetory_div">
+                      <div class="row">
+                            <div class="col-md-2">
+                              <label>  Total Items :</label>
+                            </div>
+                            <div class="col-md-2">
+                                <p>{{ total_items }}</p>
+                            </div>
+                            
+                        </div>
+                        <hr>
+                      <div class="row"  id="add_inventory_div">
+                         
+                          <form id="login" method="POST">
+
+                           {% for fields in merchant_inv_form %}
+                              <div class="col-md-6" >
+                               <label> {{ fields.label }} </label>
+                               <div class="field_values">{{ fields }}</div>
+                               <br/>
+                              </div>
+                            
+                          {% if forloop.counter|divisibleby:"3" %}
+                          {% endif %} {% endfor %}
+
+                         
+                           <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3" style="text-align: right;">
+                              
+                              <input type="submit" value ="Add Inventory" class="btn btn-primary" name="SAVE" id="save" style="margin-right:  15px;"> 
+                            </div>
+                          </div>
+                           {{ form.errors }} 
+                        {% csrf_token %}
+                        </form>
+
+                      </div>
+                      
+
+                         <hr>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                             <table id="inventory_table" class="display" width="100%"></table>
+                          </div>                          
+
+                        </div>
+
+                        <hr>
+
+                    </div>
+          </div>
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+              </section>
+
+            <footer id="footer">
+              <div class="container">
+                  <p>BizzInno Strategist  &copy 2017</p>
+    </div>
+
+  </footer>
+{% endblock %}
+
+{% block bottomscript %}
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">   
+
+  var saved_inventory_json = {{ saved_inventory|safe }}
+  var temp = ""
+  id = 0;
+  var deal_items = []
+
+    $('#inventory_table').dataTable({
+        "data": saved_inventory_json,
+        "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+          id =iDisplayIndex ;
+            
+            $('td:eq(4)', nRow).html('<a href=# id='+id+' class=add_inv>' +
+                aData[4] + '</a>');
+            return nRow;
+        },
+        "columns": [
+            { title: "Item Name" },
+            { title: "Quantity" },
+            { title: "Price" },
+            { title: "Description" },
+            { title: "Action" },
+        ]
+
+
+
+    });  
+
+   // $('#example').DataTable();
+
+   $('a.add_inv').click(function () {
+      var text = $(this).attr('id');
+      console.log(text);
+      console.log(saved_inventory_json[text]);
+      deal_items.push(saved_inventory_json[text]);
+      console.log(deal_items);
+   });
+
+
+
+
+
+
+  var i = 0
+  $(document).ready(function() {
+     $('.alert').hide();
+     $('#header').hide()
+     $('#add_inventory_div').find('input:text').val('');
+     $('#add_inventory_div').find(':input[type="number"]').val('');
+
+  });
+
+  $('#save').click(function() {
+     $('.alert').show();
+     
+  });
+</script>
+
+{% endblock %}

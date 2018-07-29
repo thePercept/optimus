@@ -1,0 +1,62 @@
+{% extends 'merchant_base.html' %}
+{% load static %}
+
+<html>
+  <head>
+    <title>Merchant Portal</title>
+
+  </head>
+
+  {% block body_block %}
+  <div class="container" id="main-container" >
+    <div class="page-header">
+      <h3>3 Step Deal Creation </h3> <small>The Merchant logged in is : {{ merchant_obj.merchant_name }}</small>
+    </div>
+
+
+{% if merchant_obj.merchant_category == 'fnb' %}
+<form method="post">
+  {% csrf_token %}
+  <div class = "col-md-8">{{ deal_meta_form.as_p }}</div>
+
+    {{ formset.management_form }}
+    <div style="display:none;" id="form_template">
+        {{ formset.empty_form.as_p }}
+    </div><!-- stores empty form for javascript -->
+    <div id="forms"></div><!-- where the generated forms go -->
+    <input type="submit" id="create_deal_now" value="Create Deal Now!!" />
+</form>
+{% endif %}
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      console.log(localStorage.getItem("items"))
+      var items = JSON.parse(localStorage.getItem("items"))
+      var qtys = JSON.parse(localStorage.getItem("qtys"))
+      var deal_title = ""
+      var newStr =""
+      var total_items = 0
+      console.log(items[0]+'and'+qtys[0])
+      $(document).ready(function() {
+          for(i=0;i<items.length;i++){
+            deal_title  += qtys[i] + items[i] + " + ";
+            newStr = deal_title.substring(0, deal_title.length-2);
+
+            }
+      $('#id_deal_title').val(newStr);
+          console.log(deal_title);
+          console.log(newStr);
+      $('#item_count').val()
+          console.log("Total items form genearetd this time is : "+items.length)
+
+         });
+
+
+
+
+
+    </script>
+  {% endblock %}
+</html>

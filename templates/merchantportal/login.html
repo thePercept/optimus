@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<body>
+        <form method="post" action="{% url 'mp_login' %}">
+        {% csrf_token %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h2 class="panel-title">Merchant Portal</h2>
+            </div>
+            <div class="panel-body">
+              <div>
+                <td>Username</td>
+                <td>{{ login_form.username }}</td>
+              </div>
+              <div>
+                <td>Password</td>
+                <td>{{ login_form.password }}</td>
+              </div>
+              <div>
+                <br/>  <br/>  <br/>
+
+              </div>
+              <div>
+                <input type="submit" value="login" />
+                <!-- <input type="hidden" name="next" value="{{ next }}" /> -->
+              </div>
+
+            </div>
+          </div>
+
+
+        </form>
+</body>
+</html>

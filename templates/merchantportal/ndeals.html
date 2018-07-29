@@ -1,0 +1,286 @@
+{% extends 'nbase.html' %}
+{% load static %}
+
+{% block title %}
+  Merchant Portal | Login
+{% endblock %}
+{% block customcss %}
+<link href={% static 'css/merchantportal/mportal.css' %} rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+<nav class="navbar  navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Merchant Portal</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href={% url 'mp_index' %}>Dashboard</a></li>
+            <li class="active"><a href={% url 'mp_deals' %} >Deals</a></li>
+            <li><a href="#">Advertisement</a></li>
+            <li ><a href={% url 'mp_inventory' %}>Inventory</a></li>
+      <li><a href="post">Sales</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Welcome Merchant</a></li>
+            <li><a href="login.html">Logout</a></li>
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+</nav>
+
+
+
+
+
+
+
+    <section id="breadcrumb">
+        <div class="container ">
+            <ol class="breadcrumb breadcrumb-margin">
+                <li class="active">Dashboard</li>
+            </ol>
+        </div>
+    </section>
+
+  <section id="main">
+    <div class="container">
+
+
+    <div class="row">
+
+<!--       <div class="col-md-12">
+
+          <div class="panel panel-default height-panel">
+            <div class="panel-heading main-color-bg ">
+              <h3 class="panel-title">Deals Published</h3>
+            </div>
+            
+            <div class="panel-body" id="published_deals" align="center" >
+
+              <em>No deals published yet. Create deals first</em>
+
+
+            </div>
+          </div>
+          </div> -->
+
+
+
+      <div class="col-md-12">
+
+          <!--Daily Stats-->
+          <div class="panel panel-default ">
+            <div class="panel-heading">
+              <h3 class="panel-title">Create Deals</h3>
+            </div>
+            <div class="panel-body" id="invetory_div">
+                      <div class="row">
+                            <div class="col-md-2">
+                              <label>  Total Items :</label>
+                            </div>
+                            <div class="col-md-10">
+                                <em id = "notice">No items added. Please add items from the inventory and click on create deals</em>
+                            </div>
+                            
+                        </div>
+                        <hr>
+   
+                      
+
+
+             <div class="row ">
+              <div class="col-md-12 ">
+                  
+             <div class="well" id="deal_temp_container"></div>
+                           
+
+
+                            <hr>
+
+                          </div>                          
+
+                        </div>
+                         <div class="row">
+                          <div class="col-md-12" align="right">
+                            
+                            <button type="button" class=" btn btn-link" id="xxx">CLEAR ALL</button>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <form action={% url 'mp_deals_add_info_new' %}>
+                            <input type="submit" value ="Create Deals" class="btn btn-primary " name="SAVE" id="save_deal" style="margin-right:  15px;"> </form>
+                              
+
+
+                            
+                             
+                          </div>                          
+
+                        </div>
+                          <br/>  
+                         <div class="row">
+                            <div class="col-md-2">
+                              <label>  Inventory  :</label>
+                            </div>
+                            <div class="col-md-10">
+                                
+                            </div>
+                            
+                        </div>
+                          <hr>
+
+
+                      <div class="row">
+                          <div class="col-md-12">
+                             <table id="inventory_table" class="display" width="100%"></table>
+                          </div>                          
+
+                        </div>
+
+                    </div>
+          </div>
+
+
+
+
+
+                  </div>
+    </div>
+              
+   </div>
+  </section>
+
+            <footer id="footer">
+              <div class="container">
+                  <p>BizzInno Strategist  &copy 2017</p>
+    </div>
+
+  </footer>
+{% endblock %}
+
+{% block bottomscript %}
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">   
+
+  var saved_inventory_json = {{ saved_inventory|safe }}
+  
+  var temp = ""
+  id = 0;
+  var deal_items = []
+  var item = []
+
+
+  $('#inventory_table').dataTable({
+        "data": saved_inventory_json,
+        "aaSorting": [],
+        "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+          id =iDisplayIndex ;
+          console.log(id);
+          console.log(saved_inventory_json[id]);
+            
+            $('td:eq(4)', nRow).html("<button type='button' class='zzz btn btn-link' id="+id+">ADD</button>" +
+                aData[4] + '</a>');
+            return nRow;
+        },
+        "columns": [
+            { title: "Item Name" },
+            { title: "Quantity" },
+            { title: "Price" },
+            { title: "Description" },
+            { title: "Action" },
+        ]
+
+
+  });  
+
+   
+
+   $('.zzz').click(function () {
+      var text = $(this).attr('id');
+      console.log(id);
+      //console.log(saved_inventory_json[text]);
+      item = saved_inventory_json[text];
+      deal_items.push(item);
+      console.log(item);
+      $('#deal_temp_container').append("&nbsp;<span class='badge'>"+item[1]+"&nbsp;"+item[0]+"</span>&nbsp;");
+      
+      console.log(deal_items);
+      item = [];
+
+
+     
+      $('#notice').text(deal_items.length);
+     
+      
+           
+      });
+
+    $('#xxx').click(function(){
+         
+          alert("CLEAR ALL CLICKED");
+          $('#deal_temp_container').empty();
+          if(deal_items.length > 0){
+        alert("Clearing deal items array");
+        deal_items = [];
+      }
+
+    });
+
+    $('#save_deal').click(function(){
+
+      if(deal_items.length > 0){
+        alert("Deals items Added");
+        console.log(deal_items.length);
+        if (typeof(Storage) !== "undefined") {
+          items_converted = JSON.stringify(deal_items);
+          localStorage.setItem('items',items_converted);
+          //localStorage.setItem('qtys',JSON.stringify(qtys))
+          console.log("Data stored to storage ..I think");
+
+           
+           } 
+        else 
+          {
+           alert('No Storage available');
+          }    
+
+          // var storedNames = JSON.parse(localStorage.getItem("items"));
+          // console.log(storedNames);alert(storedNames);   
+      }
+
+    });
+
+
+
+
+
+  var i = 0
+  $(document).ready(function() {
+     $('.alert').hide();
+     $('#header').hide()
+     $('#add_inventory_div').find('input:text').val('');
+     $('#add_inventory_div').find(':input[type="number"]').val('');
+
+
+
+
+
+  });
+
+  $('#save').click(function() {
+     $('.alert').show();
+     
+  });
+</script>
+
+{% endblock %}

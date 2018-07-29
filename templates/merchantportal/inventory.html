@@ -1,0 +1,156 @@
+{% extends 'merchant_base.html' %}
+{% load static %}
+
+
+<html>
+	<head>
+		<title>Merchant Portal</title>
+		<style>
+
+		html, body, .full-height {
+    height: 100%;
+}
+#well1 {
+    height: 15%; /*fall back for IE8, Safari 5.1, Opera Mini and pre-4.4 Android browsers*/
+    height: calc(15% - 20px);
+    overflow: hidden; /*better to decide how you want to handle this than to let the browser decide*/
+}
+#well2 {
+    height: 85%;
+    margin-bottom: 0;
+    overflow: auto;
+}
+
+		</style>
+	</head>
+
+  {% block body_block %}
+	<div class="container" id="main-container" >
+
+		<div class="page-header">
+			<h3>Create Inventory </h3>
+		</div>
+
+		{% if merchant_category == 'fnb' %}
+		<form method="post">
+			{% csrf_token %}
+			<div class="row">
+				<div class="col-md-2">Item Name </div>
+				<div class="col-md-2">{{ inventory_form.item_name }}</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">Quantity </div>
+				<div class="col-md-2">{{ inventory_form.quantity }}</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">Price </div>
+				<div class="col-md-2">{{ inventory_form.price }}</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">Description </div>
+				<div class="col-md-2">{{ inventory_form.description }}</div>
+				<input type = "submit" value="Add Item">
+				</div>
+			</form>
+		{% elif  merchant_category == 'travelnhotels' %}
+		<form method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-2">Room Type </div>
+			<div class="col-md-2">{{ inventory_form.offer }}</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">No. of People </div>
+			<div class="col-md-2">{{ inventory_form.no_of_people }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">Description </div>
+			<div class="col-md-2">{{ inventory_form.description }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">Price </div>
+			<div class="col-md-2">{{ inventory_form.price }}</div>
+			<input type = "submit" value="Add Item">
+			</div>
+		</form>
+		{% elif merchant_category == 'spansaloon' %}
+		{% elif merchant_category == 'activities' %}
+		{% elif merchant_category == 'instore' %}
+		{% elif merchant_category == 'others' %}
+		{% else %}
+		{% endif %}
+			<br/>
+			<br/>
+		{% if merchant_category == 'fnb' %}
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover" id="merchantTable">
+						<thead>
+							<tr>
+								<th>Sr no.</th>
+								<th>Item Name</th>
+								<th>Quantity</th>
+								<th>Price</th>
+								<th>Description</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+					{% for item in items %}
+
+						<tbody>
+							<tr>
+								<td>{{ item.id }}</td>
+								<td>{{ item.item_name }}</td>
+								<td>{{ item.quantity }}</td>
+								<td>{{ item.price }}</td>
+								<td>{{ item.description }}</td>
+								<td>
+									<a href= "{% url 'delete' merchant_id item.id %}" >DELETE</a>
+								</td>
+							</tr>
+						</tbody>
+					</div>
+					{% endfor %}
+				</table>
+			</div>
+		{% elif  merchant_category == 'travelnhotels' %}
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" id="merchantTable">
+				<thead>
+					<tr>
+						<th>Sr no.</th>
+						<th>Room Type</th>
+						<th>No of People</th>
+						<th>Price</th>
+						<th>Description</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+			{% for item in items %}
+				<tbody>
+					<tr>
+						<td>{{ item.id }}</td>
+						<td>{{ item.offer }}</td>
+						<td>{{ item.no_of_people }}</td>
+						<td>{{ item.price }}</td>
+						<td>{{ item.description }}</td>
+						<td>
+							<a href= "{% url 'delete' merchant_id item.id %}" >DELETE</a>
+						</td>
+					</tr>
+				</tbody>
+			</div>
+			{% endfor %}
+		</table>
+	</div>
+
+		{% elif merchant_category == 'spansaloon' %}
+		{% elif merchant_category == 'activities' %}
+		{% elif merchant_category == 'instore' %}			{% elif merchant_category == 'others' %}
+		{% else %}
+		{% endif %}
+
+  {% endblock %}
+
+
+	</html>

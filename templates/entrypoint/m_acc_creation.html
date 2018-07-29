@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+<html>
+  <head>
+    <title>Optimus</title>
+  </head>
+
+  {% block body_block %}
+
+
+
+  <div class="container" id="main-container" >
+    <div class="page-header">
+      <h3>Active Merchants </h3>
+    </div>
+
+      {% if merchant %}
+
+      Merchant ID :  {{ merchant.m_id }}<br/>
+      Name :  {{ merchant.merchant_name }}<br/>
+      Email : {{ merchant.merchant_email }}<br/>
+      Deal Account Stats :<br/> <br/>
+      {{dealaccount.total_deals_created}}
+      {{dealaccount.total_active_deals}}
+      <form method="post">
+        {% csrf_token %}
+        {{form.total_deals_created.as_hidden}}<br/>
+        {{form.total_active_deals.as_hidden}}
+        <input type = "submit" value="Activate Merchant">
+
+
+      </form>
+
+
+      {% else %}
+          <b>Something's wrong !!</b>
+      {% endif %}
+
+  {% endblock %}

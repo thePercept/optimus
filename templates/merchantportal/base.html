@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load staticfiles%}
+
+<html>
+    <head>
+        <title>{% block title %}Merchant Portal{% endblock %}</title>
+        <link href="{% static "datatables/css/bootstrap.min.css" %}" rel="stylesheet">
+        <link href="{% static "datatables/css/dataTables.bootstrap.min.css" %}" rel="stylesheet">
+        <style>
+
+        body {
+            padding-top: 40px;
+        }
+        #mydiv {
+            position:fixed;
+            top: 50%;
+            left: 50%;
+            width:30em;
+            height:18em;
+            margin-top: -9em; /*set to a negative number 1/2 of your height*/
+            margin-left: -15em; /*set to a negative number 1/2 of your width*/
+            border: none !important;
+            background-color: #ffffff;
+        }
+
+        </style>
+    </head>
+
+    <body>
+    <div class="well" id="mydiv">
+      <div class="panel">
+      {% block body %}
+      {% endblock %}
+      <ul>
+
+      {% if user.is_authenticated %}
+     <li>User: {{ user.get_username }}</li>
+     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+   {% else %}
+     <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+   {% endif %}
+  </ul>
+
+</div>
+      </div>
+    </body>
+    </html>
