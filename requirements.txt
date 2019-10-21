@@ -1,7 +1,7 @@
 certifi==2018.4.16
 cloudinary==1.12.0
 Django==2.0.7
-djangorestframework==3.8.2
+djangorestframework==3.9.1
 mock==2.0.0
 pbr==4.2.0
 pytz==2018.5
